@@ -1,5 +1,5 @@
 defaults: &defaults
-  working_directory: ~/repo
+  working_directory: /tmp
   docker:
     - image: circleci/node:7.10
 
@@ -12,13 +12,14 @@ jobs:
       - run: yarn install
       - run: yarn run build
       - persist_to_workspace:
-          root: /tmp
+          root: workspace
+          paths: build
 
   deploy_master:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo/build
+          at: /tmp/workspace
       # change to deployment command later
       - run: ls -a
 
