@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        at: build
+          at: build
       # change to deployment command later
       - run: ls -a
 
