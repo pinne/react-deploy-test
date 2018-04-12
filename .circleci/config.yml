@@ -6,7 +6,7 @@ jobs:
     working_directory: /tmp
     steps:
       - checkout
-      - run: yarn run install
+      - run: yarn install
 
   build:
     <<: *defaults
