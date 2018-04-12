@@ -6,12 +6,11 @@ jobs:
     working_directory: /tmp
     steps:
       - checkout
+      - run: yarn run install
 
   build:
     <<: *defaults
     steps:
-      - checkout
-      - run: yarn run install
       - run: yarn run build
       - persist_to_workspace:
           - root: build
@@ -19,7 +18,6 @@ jobs:
   deploy_master:
     <<: *defaults
     steps:
-      - checkout
       - attach_workspace:
           at: /tmp/build
       # change to deployment command later
