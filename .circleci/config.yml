@@ -12,14 +12,14 @@ jobs:
       - run: yarn install
       - run: yarn run build
       - persist_to_workspace:
-          root: workspace
-          paths: build
+          root: build
+          #to:
 
   deploy_master:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: ~/repo/workspace
+          at: ~/repo/build
       # change to deployment command later
       - run: ls -a
 
