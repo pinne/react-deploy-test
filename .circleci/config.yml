@@ -1,19 +1,20 @@
+defaults: &defaults
+  working_directory: /tmp
+  docker:
+    - image: circleci/node:7.10
+  steps:
+    - checkout
+
 version: 2
 jobs:
-  defaults: &defaults
-    docker:
-      - image: circleci/node:7.10
-    working_directory: /tmp
-    steps:
-      - checkout
-      - run: yarn install
-
   build:
     <<: *defaults
     steps:
+      - checkout
+      - run: yarn install
       - run: yarn run build
       - persist_to_workspace:
-          - root: build
+          root: build
 
   deploy_master:
     <<: *defaults
