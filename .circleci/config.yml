@@ -14,7 +14,7 @@ jobs:
       - run: yarn run install
       - run: yarn run build
       - persist_to_workspace:
-        - root: build
+          - root: build
 
   deploy_master:
     <<: *defaults
