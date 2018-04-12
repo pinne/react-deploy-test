@@ -1,5 +1,5 @@
 defaults: &defaults
-  working_directory: /tmp
+  working_directory: ~/repo
   docker:
     - image: circleci/node:7.10
   steps:
@@ -20,7 +20,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: /tmp/build
+          at: ~/repo/build
       # change to deployment command later
       - run: ls -a
 
