@@ -4,13 +4,26 @@ defaults: &defaults
     - image: circleci/node:7.10
 
 version: 2
+
 jobs:
-  build:
+  install_deps:
     <<: *defaults
     steps:
       - checkout
       - run: yarn install
       - run: yarn run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  build:
+    <<: *defaults
+    steps:
+      - run: ls -la
+      - attach_workspace:
+          at: ~/repo/
+      - run: ls -la
       - persist_to_workspace:
           root: .
           paths:
@@ -21,19 +34,31 @@ jobs:
     steps:
       - run: ls -la
       - attach_workspace:
-          at: ~/repo
-      # change to deployment command later
+          at: ~/repo/build
       - run: ls -la
 
 workflows:
   version: 2
-
   build_and_deploy_master:
     jobs:
-      - build
+      - install_deps
+      - build:
+          requires:
+            - install_deps
+          filters:
+            branches:
+              only:
+                - master
+                - develop
       - deploy_master:
           requires:
             - build
           filters:
             branches:
               only: master
+      - deploy_develop:
+          requires:
+            - build
+          filters:
+            branches:
+              only: develop
