@@ -37,7 +37,7 @@ jobs:
     steps:
       - run: ls -la
       - attach_workspace:
-          at: ~/repo/build
+          at: ~/repo
       - run: ls -la
       - run: aws s3 sync build s3://react-deploy-test/ --region eu-central-1 --delete
 
