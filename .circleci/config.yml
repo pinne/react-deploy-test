@@ -11,7 +11,6 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn run build
       - persist_to_workspace:
           root: .
           paths:
@@ -23,6 +22,8 @@ jobs:
       - run: ls -la
       - attach_workspace:
           at: ~/repo/
+      - run: ls -la
+      - run: yarn run build
       - run: ls -la
       - persist_to_workspace:
           root: .
