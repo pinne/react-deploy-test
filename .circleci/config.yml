@@ -10,7 +10,16 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            # Find a cache corresponding to this specific package.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package.json" }}
+            # Find the most recent cache used from any branch
+            - v1-npm-deps-
       - run: yarn install
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "package.json" }}
       - persist_to_workspace:
           root: .
           paths:
