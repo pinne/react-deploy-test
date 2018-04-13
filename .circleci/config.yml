@@ -31,12 +31,9 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - run: ls -la
       - attach_workspace:
           at: ~/repo/
-      - run: ls -la
       - run: yarn run build
-      - run: ls -la
       - persist_to_workspace:
           root: .
           paths:
@@ -47,13 +44,22 @@ jobs:
       - image: wilson208/circleci-awscli
     working_directory: ~/repo
     steps:
-      - run: ls -la
       - attach_workspace:
           at: ~/repo
-      - run: ls -la
       # deploying to:
       # http://react-deploy-test.s3-website.eu-central-1.amazonaws.com/
       - run: aws s3 sync build s3://react-deploy-test/ --region eu-central-1 --delete
+
+  deploy_develop:
+    docker:
+      - image: wilson208/circleci-awscli
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      # deploying to:
+      # http://react-deploy-test.s3-website.eu-central-1.amazonaws.com/
+      - run: aws s3 sync build s3://react-deploy-test/develop/ --region eu-central-1 --delete
 
 
 workflows:
