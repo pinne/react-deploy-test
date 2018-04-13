@@ -31,7 +31,9 @@ jobs:
             - build
 
   deploy_master:
-    <<: *defaults
+    docker:
+      - image: wilson208/circleci-awscli
+    working_directory: ~/repo
     steps:
       - run: ls -la
       - attach_workspace:
