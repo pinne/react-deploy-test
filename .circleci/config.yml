@@ -20,7 +20,7 @@ jobs:
     steps:
       - run: ls -a
       - attach_workspace:
-          at: ~/repo/build
+          at: ~/repo
       # change to deployment command later
       - run: ls -a
 
