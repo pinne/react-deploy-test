@@ -42,7 +42,7 @@ workflows:
   version: 2
   build_and_deploy_master:
     jobs:
-      - install_deps
+      #- install_deps
       - build:
           requires:
             - install_deps
