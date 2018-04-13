@@ -20,6 +20,8 @@ jobs:
       - run: yarn install
       - save_cache:
           key: v1-npm-deps-{{ checksum "package.json" }}
+          paths:
+            - node_modules
       - persist_to_workspace:
           root: .
           paths:
