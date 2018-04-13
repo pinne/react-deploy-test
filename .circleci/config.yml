@@ -13,7 +13,8 @@ jobs:
       - run: yarn run build
       - persist_to_workspace:
           root: .
-          to: .
+          paths:
+            - .
 
   deploy_master:
     <<: *defaults
