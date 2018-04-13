@@ -14,16 +14,16 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - .
+            - build
 
   deploy_master:
     <<: *defaults
     steps:
-      - run: ls -a
+      - run: ls -la
       - attach_workspace:
           at: ~/repo
       # change to deployment command later
-      - run: ls -a
+      - run: ls -la
 
 workflows:
   version: 2
