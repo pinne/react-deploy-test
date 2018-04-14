@@ -10,6 +10,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run: ls -la
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -17,7 +18,9 @@ jobs:
             - yarn-packages-{{ .Branch }}
             - yarn-packages-master
             - yarn-packages-
+      - run: ls -la
       - run: yarn install
+      - run: ls -la
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
