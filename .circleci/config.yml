@@ -19,7 +19,7 @@ jobs:
             - yarn-packages-master
             - yarn-packages-
       - run: ls -la
-      - run: yarn install
+      - run: npm install
       - run: ls -la
       - save_cache:
           name: Save Yarn Package Cache
@@ -38,7 +38,7 @@ jobs:
       - attach_workspace:
           at: ~/repo/
       - run: ls -la
-      - run: yarn run build
+      - run: npm run build
       - run: ls -la
       - persist_to_workspace:
           root: .
