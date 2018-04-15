@@ -10,20 +10,17 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: ls -la
       - restore_cache:
-          name: Restore Yarn Package Cache
+          name: Restore Package Cache
           keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-            - yarn-packages-{{ .Branch }}
-            - yarn-packages-master
-            - yarn-packages-
-      - run: ls -la
+            - npm-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - npm-v1-{{ .Branch }}
+            - npm-v1-master
+            - npm-v1-
       - run: npm install
-      - run: ls -la
       - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          name: Save Package Cache
+          key: npm-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules/
       - persist_to_workspace:
@@ -34,12 +31,9 @@ jobs:
   build:
     <<: *defaults
     steps:
-      - run: ls -la
       - attach_workspace:
           at: ~/repo/
-      - run: ls -la
       - run: npm run build
-      - run: ls -la
       - persist_to_workspace:
           root: .
           paths:
@@ -50,10 +44,8 @@ jobs:
       - image: wilson208/circleci-awscli
     working_directory: ~/repo
     steps:
-      - run: ls -la
       - attach_workspace:
           at: ~/repo
-      - run: ls -la
       # deploying to:
       # http://react-deploy-test.s3-website.eu-central-1.amazonaws.com/
       - run: aws s3 sync build s3://react-deploy-test/ --region eu-central-1 --delete
